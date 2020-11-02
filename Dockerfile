@@ -6,6 +6,8 @@ FROM defradigital/node-development:${PARENT_VERSION}
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 WORKDIR /home/node
 
+USER root
+
 RUN apk update && apk upgrade && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
@@ -19,7 +21,5 @@ RUN apk update && apk upgrade && \
 RUN npm install --global pa11y-ci@${PA11y_VERSION}
 
 USER node
-
-COPY --chown=node:node .pa11yci /home/node/
 
 CMD pa11y-ci
